@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  flask:
+    build: .
+    expose:
+      - "5000"
+    networks:
+      - app-network
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    ports:
+      - "5001:80"
+    depends_on:
+      - flask
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+

@@ -1,0 +1,16 @@
+# NAXSI Basic rules
+
+# check rules
+MainRule "rx:select.*(from|limit)" "msg:sql select attack" "mz:BODY|URL" "s:$SQL:8" "id:1000"
+MainRule "rx:(insert|replace).*into" "msg:sql insert attack" "mz:BODY|URL" "s:$SQL:8" "id:1001"
+MainRule "rx:(create|alter|drop|truncate) table" "msg:sql ddl attack" "mz:BODY|URL" "s:$SQL:8" "id:1002"
+MainRule "rx:union.*select" "msg:sql union select attack" "mz:BODY|URL" "s:$SQL:8" "id:1003"
+MainRule "rx:(--|#|\\/\\*)!" "msg:sql comment attack" "mz:BODY|URL" "s:$SQL:8" "id:1004"
+
+# xss rules
+MainRule "rx:script" "msg:xss scripting attack" "mz:BODY|URL" "s:$XSS:8" "id:1100"
+MainRule "rx:onmouseover\\=" "msg:xss onmouseover attack" "mz:BODY|URL" "s:$XSS:8" "id:1101"
+MainRule "rx:onerror\\=" "msg:xss onerror attack" "mz:BODY|URL" "s:$XSS:8" "id:1102"
+MainRule "rx:javascript\\:" "msg:xss javascript attack" "mz:BODY|URL" "s:$XSS:8" "id:1103"
+MainRule "rx:vbs\\:" "msg:xss vbs attack" "mz:BODY|URL" "s:$XSS:8" "id:1104"
+
